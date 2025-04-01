@@ -1,17 +1,20 @@
 package correlatividad;
 
 import lombok.Getter;
+import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
 @Getter
+@Setter
 public class Alumno {
 
     private String nombre;
     private String apellido;
-    private List<Materia> materiasAprobadas;
-    private List<Materia> materiasEnCurso;
+    private List<Materia> materiasAprobadas = new ArrayList<>();
+    private List<Materia> materiasEnCurso = new ArrayList<>();
 
     public void agregarMateriaAprobada(Materia ... materias) {
         materiasAprobadas.addAll(List.of(materias));
@@ -22,6 +25,9 @@ public class Alumno {
     }
 
     public boolean corroborarCorrelativas(Materia materia) {
-        return new HashSet<>(materiasAprobadas).containsAll(materia.getCorrelativas());
+
+        List<Materia> correlativasRequeridas = materia.getCorrelativas();
+
+        return this.materiasAprobadas.containsAll(correlativasRequeridas);
     }
 }
